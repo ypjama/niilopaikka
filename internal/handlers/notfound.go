@@ -7,6 +7,12 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// NotFoundData is used for the not found 404 page.
+type NotFoundData struct {
+	Title       string
+	Description string
+}
+
 // NotFound is the default 404 handler for niilonpaikka.
 func NotFound(w http.ResponseWriter, r *http.Request) {
 	log.WithFields(log.Fields{
@@ -15,5 +21,15 @@ func NotFound(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: Fancy html 404.
 	w.WriteHeader(http.StatusNotFound)
-	fmt.Fprint(w, "Ei oo ainakaa viä löytyny")
+	templates.ExecuteTemplate(w, "header", HeaderData{
+		Lang:        `fi`,
+		Title:       `Niilonpaikka`,
+		Description: `Näihin kuviin ja tunnelmiin, täältä tähän`,
+		Author:      `ypjama`,
+	})
+	templates.ExecuteTemplate(w, "notfound", NotFoundData{
+		Title:       `Ei oo ainakaa viä löytyny`,
+		Description: fmt.Sprintf("%d on ainoo mitä täältä nyt löyty.", http.StatusNotFound),
+	})
+	templates.ExecuteTemplate(w, "footer", nil)
 }

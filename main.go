@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"net/http"
 	"niilonpaikka/internal/handlers"
 	"os"
@@ -11,6 +12,9 @@ import (
 
 	log "github.com/sirupsen/logrus"
 )
+
+//go:embed web/*
+var webfs embed.FS
 
 func main() {
 	// Logger.
@@ -23,6 +27,9 @@ func main() {
 	if logLevel, err := log.ParseLevel(ll); err == nil {
 		log.SetLevel(logLevel)
 	}
+
+	// Handlers need the HTML templates.
+	handlers.ParseTemplates(&webfs)
 
 	// Port.
 	var defaultPort = "8080"
@@ -38,7 +45,7 @@ func main() {
 	// Routes.
 	r := mux.NewRouter()
 	r.NotFoundHandler = http.HandlerFunc(handlers.NotFound)
-	r.HandleFunc("/", handlers.RootHandler).Methods("GET")
+	r.HandleFunc("/", handlers.IndexHandler).Methods("GET")
 	r.HandleFunc("/{width:[0-9]+}/{height:[0-9]+}", handlers.ImageHandler).Methods("GET")
 	log.Debugf("Listening port %s", port)
 	log.Fatal(
