@@ -4,6 +4,8 @@ import (
 	"embed"
 	"fmt"
 	"html/template"
+	"path"
+	"strings"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -20,12 +22,32 @@ type HeaderData struct {
 var templates *template.Template
 
 // ParseTemplates will parse the .gohtml files from the given embed.FS
-func ParseTemplates(fs *embed.FS) {
+func ParseTemplates(f *embed.FS) {
+	// Let's read template filenames without extensions.
+	tmplExts := map[string]string{}
+	dirName := "web/template"
+	dirEntry, err := f.ReadDir(dirName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, de := range dirEntry {
+		if de.IsDir() || !de.Type().IsRegular() {
+			continue
+		}
 
-	// TODO: glob .gohtml files.
-	for _, n := range []string{"footer", "header", "index", "notfound"} {
-		fn := fmt.Sprintf("web/template/%s.gohtml", n)
-		bb, err := fs.ReadFile(fn)
+		ext := path.Ext(de.Name())
+		tmplExts[strings.TrimSuffix(de.Name(), ext)] = ext
+	}
+
+	if len(tmplExts) < 1 {
+		log.Fatal("no html template files found")
+	}
+
+	// Let's parse the templates.
+	// The name of each template will be the basename without extension.
+	for n, ext := range tmplExts {
+		fn := fmt.Sprintf("%s/%s%s", dirName, n, ext)
+		bb, err := f.ReadFile(fn)
 		if err != nil {
 			log.Fatal(err)
 		}

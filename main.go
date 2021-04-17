@@ -4,6 +4,7 @@ import (
 	"embed"
 	"net/http"
 	"niilopaikka/internal/handlers"
+	"niilopaikka/internal/images"
 	"os"
 	"strconv"
 	"strings"
@@ -15,6 +16,9 @@ import (
 
 //go:embed web/*
 var webfs embed.FS
+
+//go:embed assets/*
+var assetfs embed.FS
 
 func main() {
 	// Logger.
@@ -30,6 +34,9 @@ func main() {
 
 	// Handlers need the HTML templates.
 	handlers.ParseTemplates(&webfs)
+
+	// Set asset file system for the images package.
+	images.SetFS(&assetfs)
 
 	// Port.
 	var defaultPort = "8080"
