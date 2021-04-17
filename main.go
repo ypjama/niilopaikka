@@ -2,12 +2,15 @@ package main
 
 import (
 	"embed"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"niilopaikka/internal/handlers"
 	"niilopaikka/internal/images"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gorilla/mux"
 
@@ -34,11 +37,22 @@ func main() {
 		log.SetLevel(logLevel)
 	}
 
+	// Cache directory.
+	cacheDirPath, err := ioutil.TempDir("", "niilopiilo")
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Debugf("cache directory: %s", cacheDirPath)
+	defer os.RemoveAll(cacheDirPath)
+
+	// Start collecting garbage in the background.
+	go garbage(cacheDirPath)
+
 	// Handlers need the HTML templates.
 	handlers.ParseTemplates(&webfs)
 
-	// Set asset file system for the images package.
-	images.SetFS(&assetfs)
+	// Set file system and cache directory for the images package.
+	images.SetFS(&assetfs, cacheDirPath)
 
 	// Port.
 	var defaultPort = "8080"
@@ -60,4 +74,30 @@ func main() {
 	log.Fatal(
 		http.ListenAndServe(":"+port, r),
 	)
+}
+
+func garbage(dir string) {
+	log.Debugf("garbage dir: %s", dir)
+
+	for range time.Tick(time.Minute * 5) {
+		log.Debugf("Collecting garbage from %s", dir)
+
+		files, err := ioutil.ReadDir(dir)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Threshold is one hour.
+		threshold := time.Now().Add(-time.Hour * 1).Unix()
+		for _, file := range files {
+			if file.IsDir() || threshold < file.ModTime().Unix() {
+				continue
+			}
+
+			// Too old, remove it!
+			path := fmt.Sprintf("%s/%s", dir, file.Name())
+			log.Debugf("Removing file %s", path)
+			os.Remove(path)
+		}
+	}
 }

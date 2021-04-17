@@ -48,5 +48,10 @@ func ImageHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO: save resized image to generated folder
 	// TODO: serve resized image
 
-	fmt.Fprint(w, "TODO: "+images.Debug(r.Host, width, height))
+	path, err := images.Image(r.Host, width, height)
+	if err != nil {
+		log.Error(err)
+	}
+
+	fmt.Fprint(w, "TODO: "+path)
 }

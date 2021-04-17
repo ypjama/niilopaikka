@@ -17,12 +17,17 @@ var dirImages map[string][]string
 
 // dirRandSeeds maps each sub directory to an integer value.
 // These integers are then used in the cacheKey function.
-var dirRandSeeds = map[string]int{}
+var dirRandSeeds map[string]int
+
+// cacheDirPath is the path to our cached files.
+var cacheDirPath string
 
 // SetFS will set the embed filesystem for images.
-func SetFS(f *embed.FS) {
+func SetFS(f *embed.FS, tmpDirPath string) {
 	filesystem = f
+	cacheDirPath = tmpDirPath
 	dirImages = map[string][]string{}
+	dirRandSeeds = map[string]int{}
 
 	// Map out which images we have in our arsenal.
 	imagesDir := "assets/images"
@@ -34,8 +39,6 @@ func SetFS(f *embed.FS) {
 		if !d.IsDir() {
 			continue
 		}
-
-		log.Debugf("imagesDirEntry index: %s", (i + 1))
 
 		dirImages[d.Name()] = []string{}
 		dirRandSeeds[d.Name()] = i
@@ -80,5 +83,4 @@ func SetFS(f *embed.FS) {
 			len(dirImages[d.Name()]),
 		)
 	}
-
 }
