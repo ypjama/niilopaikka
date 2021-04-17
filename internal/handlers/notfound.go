@@ -13,7 +13,7 @@ type NotFoundData struct {
 	Description string
 }
 
-// NotFound is the default 404 handler for niilonpaikka.
+// NotFound is the default 404 handler for niilopaikka.
 func NotFound(w http.ResponseWriter, r *http.Request) {
 	log.WithFields(log.Fields{
 		"uri": r.RequestURI,
@@ -23,7 +23,7 @@ func NotFound(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	templates.ExecuteTemplate(w, "header", HeaderData{
 		Lang:        `fi`,
-		Title:       `Niilonpaikka`,
+		Title:       `Niilopaikka`,
 		Description: `Näihin kuviin ja tunnelmiin, täältä tähän`,
 		Author:      `ypjama`,
 	})

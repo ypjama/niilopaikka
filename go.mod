@@ -1,4 +1,4 @@
-module niilonpaikka
+module niilopaikka
 
 go 1.16
 

@@ -3,7 +3,7 @@ package main
 import (
 	"embed"
 	"net/http"
-	"niilonpaikka/internal/handlers"
+	"niilopaikka/internal/handlers"
 	"os"
 	"strconv"
 	"strings"

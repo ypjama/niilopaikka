@@ -16,7 +16,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	templates.ExecuteTemplate(w, "header", HeaderData{
 		Lang:        `fi`,
-		Title:       `Niilonpaikka`,
+		Title:       `niilopaikka`,
 		Description: `Näihin kuviin ja tunnelmiin, täältä tähän`,
 		Author:      `ypjama`,
 	})

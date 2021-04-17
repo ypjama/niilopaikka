@@ -7,7 +7,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// BadRequest is the 400 handler for niilonpaikka.
+// BadRequest is the 400 handler for niilopaikka.
 func BadRequest(w http.ResponseWriter, r *http.Request) {
 	log.WithFields(log.Fields{
 		"uri": r.RequestURI,
