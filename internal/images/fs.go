@@ -15,6 +15,10 @@ var filesystem *embed.FS
 // have in each subfolder.
 var dirImages map[string][]string
 
+// dirRandSeeds maps each sub directory to an integer value.
+// These integers are then used in the cacheKey function.
+var dirRandSeeds = map[string]int{}
+
 // SetFS will set the embed filesystem for images.
 func SetFS(f *embed.FS) {
 	filesystem = f
@@ -26,12 +30,15 @@ func SetFS(f *embed.FS) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, d := range imagesDirEntry {
+	for i, d := range imagesDirEntry {
 		if !d.IsDir() {
 			continue
 		}
 
+		log.Debugf("imagesDirEntry index: %s", (i + 1))
+
 		dirImages[d.Name()] = []string{}
+		dirRandSeeds[d.Name()] = i
 
 		subDirEntry, err := filesystem.ReadDir(fmt.Sprintf("%s/%s", imagesDir, d.Name()))
 		if err != nil {
@@ -74,12 +81,4 @@ func SetFS(f *embed.FS) {
 		)
 	}
 
-}
-
-// sourceImage will return the path of the source image.
-// The source image will change based on the dimensions
-// and current time.
-func sourceImage(directory string, width int, height int) string {
-
-	return ""
 }

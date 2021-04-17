@@ -20,6 +20,8 @@ var webfs embed.FS
 //go:embed assets/*
 var assetfs embed.FS
 
+// TODO: ads (adsense).
+// TODO: google analytics.
 func main() {
 	// Logger.
 	log.SetOutput(os.Stdout)

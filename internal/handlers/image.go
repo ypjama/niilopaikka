@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"niilopaikka/internal/images"
 	"strconv"
 
 	"github.com/gorilla/mux"
@@ -42,12 +43,10 @@ func ImageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: Fancy html error pages.
 	// TODO: serve generated image if it exits and is not too old.
-	// TODO: select random source image
 	// TODO: resize image
 	// TODO: save resized image to generated folder
 	// TODO: serve resized image
 
-	fmt.Fprint(w, "TODO")
+	fmt.Fprint(w, "TODO: "+images.Debug(r.Host, width, height))
 }
