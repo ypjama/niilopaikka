@@ -6,7 +6,7 @@ WORKDIR /build
 COPY . .
 
 # Fail the build on purpose if there are no images.
-RUN scripts/check-images.sh
+RUN scripts/check-source-images.sh
 
 # Install upx for binary compression.
 RUN apt-get update
