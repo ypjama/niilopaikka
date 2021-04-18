@@ -7,7 +7,6 @@ import (
 )
 
 const (
-	tmpFilePrefix = "tmp-"
 	jpegExtension = ".jpg"
 )
 
@@ -42,6 +41,7 @@ func Image(host string, width int, height int) (string, error) {
 	// Check if image is cached.
 	path, ok := ck.cachedJpeg()
 	if ok {
+		log.Debugf("cached image %s found", path)
 		return path, nil
 	}
 

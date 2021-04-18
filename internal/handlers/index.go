@@ -26,7 +26,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	templates.ExecuteTemplate(w, "index", IndexData{
 		BaseURL:     baseURL,
 		Title:       `Niilopaikka`,
-		Description: `Kun sinä tätä videoo katselet ni kello on just sen verran kun sinä katsot!`,
+		Description: `Jos tuntuu että tää on ihan paskaa niin sitten ei tarvitse katsella.`,
 	})
 	templates.ExecuteTemplate(w, "footer", nil)
 }

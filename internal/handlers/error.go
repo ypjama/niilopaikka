@@ -37,15 +37,21 @@ func NotFound(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// BadRequest is the 400 handler for niilopaikka.
-func BadRequest(w http.ResponseWriter, r *http.Request) {
+// BadRequestWithDescription handles 400 responses.
+// Difference to BadRequest is that you can give custom description text.
+func BadRequestWithDescription(w http.ResponseWriter, r *http.Request, description string) {
 	log.WithFields(log.Fields{"uri": r.RequestURI}).Info("BadRequest")
 
 	writeError(w, LangFI, ErrorData{
 		Status:      http.StatusBadRequest,
 		Title:       `Oho, nyt meinas tulla köntsät housuun!`,
-		Description: `Jos ei pelkoa kohtaa niin sitä ei kohtaa koskaan.`,
+		Description: description,
 	})
+}
+
+// BadRequest handles 400 responses.
+func BadRequest(w http.ResponseWriter, r *http.Request) {
+	BadRequestWithDescription(w, r, `Jos ei pelkoa kohtaa niin sitä ei kohtaa koskaan.`)
 }
 
 func InternalServerError(w http.ResponseWriter, r *http.Request) {
