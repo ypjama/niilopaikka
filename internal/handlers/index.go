@@ -13,8 +13,6 @@ type IndexData struct {
 
 // IndexHandler handles the response for the index page.
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO: Render html page with examples how to use.
-
 	// TODO: Figure out how to detect TLS properly.
 	baseURL := "http"
 	if r.TLS != nil {
