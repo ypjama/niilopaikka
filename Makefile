@@ -13,6 +13,10 @@ build-docker:
 	docker build . -t $(imagename):$$(git rev-parse --short HEAD)
 	docker tag $(imagename):$$(git rev-parse --short HEAD) $(imagename):latest
 
+deploy-to-heroku:
+	heroku container:push web
+	heroku container:release web
+
 run:
 	go run main.go
 
