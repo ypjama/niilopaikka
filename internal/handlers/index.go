@@ -6,6 +6,7 @@ import (
 
 // IndexData is used for the index page.
 type IndexData struct {
+	BaseURL     string
 	Title       string
 	Description string
 }
@@ -14,14 +15,18 @@ type IndexData struct {
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO: Render html page with examples how to use.
 
-	templates.ExecuteTemplate(w, "header", HeaderData{
-		Lang:        `fi`,
-		Title:       `niilopaikka`,
-		Description: `Näihin kuviin ja tunnelmiin, täältä tähän`,
-		Author:      `ypjama`,
-	})
+	// TODO: Figure out how to detect TLS properly.
+	baseURL := "http"
+	if r.TLS != nil {
+		baseURL += "s"
+	}
+	baseURL += "://" + r.Host
+
+	templates.ExecuteTemplate(w, "header", NewHeaderData(LangFI))
 	templates.ExecuteTemplate(w, "index", IndexData{
-		Title: `Kun sinä tätä videoo katselet ni kello on just sen verran kun sinä katsot`,
+		BaseURL:     baseURL,
+		Title:       `Niilopaikka`,
+		Description: `Kun sinä tätä videoo katselet ni kello on just sen verran kun sinä katsot!`,
 	})
 	templates.ExecuteTemplate(w, "footer", nil)
 }

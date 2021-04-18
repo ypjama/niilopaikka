@@ -10,14 +10,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// HeaderData is used in the shared "header" HTML template.
-type HeaderData struct {
-	Lang        string
-	Title       string
-	Description string
-	Author      string
-}
-
 // templates for HTML pages.
 var templates *template.Template
 

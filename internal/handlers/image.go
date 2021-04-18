@@ -51,6 +51,8 @@ func ImageHandler(w http.ResponseWriter, r *http.Request) {
 	path, err := images.Image(r.Host, width, height)
 	if err != nil {
 		log.Error(err)
+		InternalServerError(w, r)
+		return
 	}
 
 	fmt.Fprint(w, "TODO: "+path)
