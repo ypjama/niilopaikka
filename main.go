@@ -25,6 +25,7 @@ var assetfs embed.FS
 
 // TODO: ads (adsense).
 // TODO: google analytics.
+// TODO: the cookie pop-up -thingie: https://oko.uk/blog/adsense-and-cookies.
 func main() {
 	// Logger.
 	log.SetOutput(os.Stdout)
