@@ -14,11 +14,7 @@ type IndexData struct {
 // IndexHandler handles the response for the index page.
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO: Figure out how to detect TLS properly.
-	baseURL := "http"
-	if r.TLS != nil {
-		baseURL += "s"
-	}
-	baseURL += "://" + r.Host
+	baseURL := "https://" + r.Host
 
 	templates.ExecuteTemplate(w, "header", NewHeaderData(LangFI))
 	templates.ExecuteTemplate(w, "index", IndexData{
