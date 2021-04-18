@@ -71,6 +71,7 @@ func main() {
 	r.NotFoundHandler = http.HandlerFunc(handlers.NotFound)
 	r.HandleFunc("/", handlers.IndexHandler).Methods("GET")
 	r.HandleFunc("/{width:[0-9]+}/{height:[0-9]+}", handlers.ImageHandler).Methods("GET")
+	r.HandleFunc("/favicon.ico", handlers.FaviconHandler).Methods("GET")
 	log.Debugf("Listening port %s", port)
 	log.Fatal(
 		http.ListenAndServe(":"+port, r),

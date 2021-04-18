@@ -13,8 +13,13 @@ import (
 // templates for HTML pages.
 var templates *template.Template
 
+// filesystem for web assets.
+var filesystem *embed.FS
+
 // ParseTemplates will parse the .gohtml files from the given embed.FS
 func ParseTemplates(f *embed.FS) {
+	filesystem = f
+
 	// Let's read template filenames without extensions.
 	tmplExts := map[string]string{}
 	dirName := "web/template"

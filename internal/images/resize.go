@@ -1,6 +1,7 @@
 package images
 
 import (
+	"bytes"
 	"fmt"
 	"image"
 	"image/jpeg"
@@ -28,13 +29,12 @@ func tmpJpegPath() string {
 // openImage takes a file path and tries to open and decode
 // it as an image.
 func openImage(path string) (image.Image, error) {
-	file, err := os.Open(path)
+	bb, err := filesystem.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
 
-	img, _, err := image.Decode(file)
+	img, _, err := image.Decode(bytes.NewReader(bb))
 	if err != nil {
 		return nil, err
 	}
