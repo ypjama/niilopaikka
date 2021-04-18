@@ -17,3 +17,6 @@ vendor/
 # Images.
 /assets/images
 !/assets/images/niilopaikka/.gitkeep
+
+# Binaries.
+/bin
