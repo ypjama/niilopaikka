@@ -55,14 +55,8 @@ func newCacheKey(directory string, width int, height int) cacheKey {
 }
 
 // jpegPath tells where the cached jpeg file should be.
-func (ck cacheKey) jpegPath(prefix string) string {
-	return fmt.Sprintf(
-		"%s/%s%d%s",
-		cacheDirPath,
-		prefix,
-		ck.seed,
-		jpegExtension,
-	)
+func (ck cacheKey) jpegPath() string {
+	return fmt.Sprintf("%s/%d%s", cacheDirPath, ck.seed, jpegExtension)
 }
 
 // sourceImage returns the path of the source image.
@@ -80,7 +74,7 @@ func (ck cacheKey) sourceImage() string {
 
 // cachedJpeg will return file path to cached file if it exists.
 func (ck cacheKey) cachedJpeg() (string, bool) {
-	path := ck.jpegPath("")
+	path := ck.jpegPath()
 	file, err := os.Stat(path)
 
 	if err != nil {

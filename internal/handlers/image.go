@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"niilopaikka/internal/images"
 	"os"
@@ -43,7 +44,7 @@ func ImageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: resize image
+	// Get path to resized image.
 	path, err := images.Image(r.Host, width, height)
 	if err != nil {
 		log.Error(err)
@@ -58,7 +59,9 @@ func ImageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	filename := fmt.Sprintf("%dx%d.jpg", width, height)
 	w.Header().Add("content-type", "image/jpeg")
+	w.Header().Add("content-disposition", fmt.Sprintf(`inline; filename="%s"`, filename))
 	w.WriteHeader(http.StatusOK)
 	w.Write(bb)
 }
