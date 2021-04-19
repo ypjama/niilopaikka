@@ -1,39 +1,59 @@
 <div class="container">
 
   <div class="row">
-    <div class="col-8">
+    <div class="column">
       <h1>{{.Title}}</h1>
-      <p>{{.Description}}</p>
-      <ul>
-        <li><a href="/22/22">{{.BaseURL}}/22/22</a></li>
-        <li><a href="/320/240">{{.BaseURL}}/320/240</a></li>
-        <li><a href="/640/480">{{.BaseURL}}/640/480</a></li>
-      </ul>
-    </div>
-    <div class="col-4">
-      <div class="row">
-        <div class="column">
-          <img src="/140/100" />
-          <img src="/145/100" />
-        </div>
-
-      </div>
-      <div class="row">
-        <div class="column">
-          <img src="/290/140" />
-        </div>
-      </div>
+      <blockquote class="blockquote">
+        <p>{{.Description}}</p>
+      </blockquote>
     </div>
   </div>
+
   <div class="row">
-    <div class="column">
-      <img src="/460/300" />
-      <img src="/280/300" />
-      <img src="/155/300" />
-      <img src="/88/300" />
-      <img src="/50/300" />
+    <div class="col-md-6 col-sm-12">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a href="/22/22" class="list-group-item list-group-item-action">{{.Host}}/22/22</a>
+        </li>
+        <li class="nav-item">
+          <a href="/320/240" class="list-group-item list-group-item-action">{{.Host}}/320/240</a>
+        </li>
+        <li class="nav-item">
+          <a href="/480/360" class="list-group-item list-group-item-action">niilopaikka.herokuapp.com/480/360</a>
+        </li>
+      </ul>
     </div>
 
+    <div class="col-md-3 col-sm-6 text-center">
+      <img src="/640/480" class="img-thumbnail" />
+    </div>
+    <div class="col-md-3 col-sm-6 text-center">
+      <img src="/641/480" class="img-thumbnail" />
+    </div>
+    <div class="col-md-3 col-sm-6 text-center">
+      <img src="/640/481" class="img-thumbnail" />
+    </div>
+    <div class="col-md-3 col-sm-6 text-center">
+      <img src="/641/481" class="img-thumbnail" />
+    </div>
+    <div class="col-md-3 col-sm-6 text-center">
+      <img src="/642/481" class="img-thumbnail" />
+    </div>
+    <div class="col-md-3 col-sm-6 text-center">
+      <img src="/641/482" class="img-thumbnail" />
+    </div>
+    <div class="col-md-3 col-sm-6 text-center">
+      <img src="/642/482" class="img-thumbnail" />
+    </div>
+    <div class="col-md-3 col-sm-6 text-center">
+      <img src="/643/482" class="img-thumbnail" />
+    </div>
+    <div class="col-md-3 col-sm-6 text-center">
+      <img src="/642/483" class="img-thumbnail" />
+    </div>
+    <div class="col-md-3 col-sm-6 text-center">
+      <img src="/643/483" class="img-thumbnail" />
+    </div>
   </div>
 
 </div>

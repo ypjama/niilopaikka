@@ -6,19 +6,16 @@ import (
 
 // IndexData is used for the index page.
 type IndexData struct {
-	BaseURL     string
+	Host        string
 	Title       string
 	Description string
 }
 
 // IndexHandler handles the response for the index page.
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO: Figure out how to detect TLS properly.
-	baseURL := "https://" + r.Host
-
 	templates.ExecuteTemplate(w, "header", NewHeaderData(LangFI))
 	templates.ExecuteTemplate(w, "index", IndexData{
-		BaseURL:     baseURL,
+		Host:        r.Host,
 		Title:       `Niilopaikka`,
 		Description: `Jos tuntuu että tää on ihan paskaa niin sitten ei tarvitse katsella.`,
 	})
