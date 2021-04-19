@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/unrolled/secure"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -66,13 +67,24 @@ func main() {
 		port = defaultPort
 	}
 
-	// Routes.
+	// Gorilla router stronk.
 	r := mux.NewRouter()
 	r.NotFoundHandler = http.HandlerFunc(handlers.NotFound)
+
+	// Force https.
+	disableHTTPS, _ := os.LookupEnv("DISABLE_HTTPS")
+	if strings.ToUpper(disableHTTPS) != "TRUE" {
+		secureMiddleware := secure.New(secure.Options{
+			SSLRedirect: true,
+		})
+		r.Use(secureMiddleware.Handler)
+	}
+
+	// Routes.
 	r.HandleFunc("/", handlers.IndexHandler).Methods("GET")
 	r.HandleFunc("/{width:[0-9]+}/{height:[0-9]+}", handlers.ImageHandler).Methods("GET")
 	r.HandleFunc("/favicon.ico", handlers.FaviconHandler).Methods("GET")
-	log.Debugf("Listening port %s", port)
+	log.Infof("Listening port %s", port)
 	log.Fatal(
 		http.ListenAndServe(":"+port, r),
 	)

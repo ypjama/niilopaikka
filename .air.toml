@@ -11,7 +11,7 @@ cmd = "go build -o ./tmp/main ."
 # Binary file yields from `cmd`.
 bin = "tmp/main"
 # Customize binary.
-full_bin = "LOG_LEVEL=debug LOG_FORMATTER=text ./tmp/main"
+full_bin = "LOG_LEVEL=debug LOG_FORMATTER=text DISABLE_HTTPS=true ./tmp/main"
 # Watch these filename extensions.
 include_ext = ["go", "jpeg", "jpg", "png", "ico", "gohtml"]
 # Ignore these filename extensions or directories.
