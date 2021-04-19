@@ -17,6 +17,9 @@ deploy-to-heroku:
 	heroku container:push web
 	heroku container:release web
 
+dev:
+	scripts/live-reload.sh
+
 run:
 	go run main.go
 

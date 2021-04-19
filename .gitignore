@@ -20,3 +20,6 @@ vendor/
 
 # Binaries.
 /bin
+
+# Air live reload.
+/tmp
