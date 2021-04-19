@@ -11,7 +11,7 @@ fi
 
 # Install air if it is not available.
 if ! type "air" >/dev/null 2>&1; then
-  cd
+  cd || exit 1
   go get -u github.com/cosmtrek/air
 fi
 
