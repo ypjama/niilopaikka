@@ -11,7 +11,6 @@ import (
 	"golang.org/x/image/draw"
 
 	"github.com/google/uuid"
-	log "github.com/sirupsen/logrus"
 )
 
 // tmpJpegPath will generate an available path for a temporary file.
@@ -79,7 +78,6 @@ func sourceRect(orinalRect image.Rectangle, destAspectRatio float64) image.Recta
 func resize(ck cacheKey) (string, error) {
 	tmpPath := tmpJpegPath()
 	destPath := ck.jpegPath()
-	log.Debugf("Resizing %s and outputting it to %s", ck.sourceImage(), destPath)
 
 	// Open the source image.
 	sourceImage, err := openImage(ck.sourceImage())
